@@ -50,9 +50,14 @@ public class UserInterface{
       try {
         weight_str = JOptionPane.showInputDialog(null,"Enter Package weight:",title,JOptionPane.PLAIN_MESSAGE);
         weight = Double.parseDouble(weight_str);
+        if(weight <= 0) {
+          throw new ZeroOrNegativeWeightException();
+        }
         valid_weight = true;
       } catch(NumberFormatException e) {
         JOptionPane.showMessageDialog(null,"Enter a valid number!",title,JOptionPane.ERROR_MESSAGE);
+      } catch(ZeroOrNegativeWeightException e) {
+        JOptionPane.showMessageDialog(null,"Weight cannot be 0 or less! Enter a valid weight amount.",title,JOptionPane.ERROR_MESSAGE);
       }
     }
 
@@ -84,7 +89,7 @@ public class UserInterface{
     boolean insured = false;
     String insured_cost = null;
 
-
+    // parse through entries
     for(Map.Entry<String,String> entry: table.entrySet()) {
       String key = entry.getKey();
       switch(key) {
@@ -112,10 +117,11 @@ public class UserInterface{
       }
     }
 
+    // format line depending if there is insurance or not
     String formatted_info = new String();
     if(insured) {
       formatted_info = String.format("Customer Name: %s\nPackage Weight: %s\nShipping Method: %s\nShipping Cost: %s\n"+
-          "Insurance Cost: %s\nTotal Cost with Insurance: %f\n"+
+          "Insurance Cost: %s\nTotal Cost with Insurance: %.2f\n"+
           "================================================\n",
           name,weight,shipping_method,shipping_cost,insured_cost,
           Double.parseDouble(shipping_cost) + Double.parseDouble(insured_cost));
@@ -129,6 +135,7 @@ public class UserInterface{
 
   public void display_package_info(ArrayList<HashMap<String,String>> member_tables) {
     StringBuilder formatted_info = new StringBuilder();
+    formatted_info.append("============ALL INVOICES FOR PACKAGES===========\n");
     formatted_info.append("================================================\n");
 
     for(HashMap<String,String> table: member_tables) {
