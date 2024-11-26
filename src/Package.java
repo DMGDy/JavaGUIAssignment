@@ -50,9 +50,9 @@ public class Package {
 
     info_table.put("customer_name",this.customer_name);
     // Safe to call toString without exception handling at is it checked on assignment by UI class
-    info_table.put("weight",Double.toString(this.weight));
+    info_table.put("weight",String.format("%.2f",this.weight));
     info_table.put("shipping_method",Integer.toString(this.shipping_method));
-    info_table.put("shipping_cost", Double.toString(this.shipping_cost));
+    info_table.put("shipping_cost", String.format("%.2f",this.shipping_cost));
 
     return info_table;
   }

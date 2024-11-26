@@ -22,7 +22,7 @@ public class InsuredPackage extends Package {
   @Override
   HashMap<String,String> display() {
     HashMap<String,String> info_table = super.display();
-    info_table.put("insured",Double.toString(this.insurance_cost));
+    info_table.put("insured",String.format("%.2f",this.insurance_cost));
 
     return info_table;
 
